@@ -10,8 +10,8 @@ import { join } from 'path';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..'),
-      exclude: ['/api*', '/public*'],
+      rootPath: join(__dirname, '..', 'public', 'dist'),
+      exclude: ['/api*'],
     }),
   ],
   controllers: [AppController, MovieDbController],
