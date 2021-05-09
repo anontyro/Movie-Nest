@@ -9,6 +9,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
