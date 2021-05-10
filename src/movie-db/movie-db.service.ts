@@ -21,7 +21,7 @@ export class MovieDbService {
     const uri = 'https://api.themoviedb.org/3/movie/popular';
     let query = `page=${page}`;
     if (region) {
-      query += `region=${region}`;
+      query += `&region=${region}`;
     }
     const popular = await this.httpFetch.getHttp<MovieDbEntity>(uri, query);
     return popular.results;
@@ -32,5 +32,15 @@ export class MovieDbService {
 
     const details = await this.httpFetch.getHttp<MovieDetailEntity>(uri);
     return details;
+  }
+
+  async getMovieSearch(searchValue: string, page = 1): Promise<MovieEntity[]> {
+    const uri = `https://api.themoviedb.org/3/search/movie`;
+
+    const query = `query=${searchValue}&page=${page}`;
+
+    const search = await this.httpFetch.getHttp<MovieDbEntity>(uri, query);
+
+    return search.results;
   }
 }

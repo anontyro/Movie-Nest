@@ -16,6 +16,12 @@ export class MovieDbController {
     return this.movieDbService.getPopular(page, region);
   }
 
+  @Get('search')
+  getMovieSearch(@Query() query) {
+    const { page, q } = query;
+    return this.movieDbService.getMovieSearch(q, page);
+  }
+
   @Get(':id')
   getDetails(@Param('id') id: number) {
     return this.movieDbService.getMovieDetail(id);
