@@ -4,7 +4,7 @@
       <div class="slide-item-container">
         <div class="slide-item-img" :style="{ backgroundImage: `url(${createBgImg(movie)})`}">
           <div class="slide-title">
-            {{ movie.title }} ({{movie.vote_average}})
+            {{ movie.title }} ({{movie.averageRating}})
           </div> 
         </div>
       </div>
@@ -38,7 +38,7 @@ export default class FullWidthCarousel extends Vue.with(Props) {
   }
   
   createBgImg = (movie: MovieItem): string => {
-    const baseUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path ?? movie.poster_path}`;
+    const baseUrl = `https://image.tmdb.org/t/p/original${movie.backdropPath ?? movie.posterPath}`;
     return baseUrl;
   }
 

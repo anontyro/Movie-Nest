@@ -1,16 +1,14 @@
 export type MovieItem = {
-  poster_path: string | null;
-  adult: boolean;
-  overview: string;
-  release_date: string;
-  genre_ids: number[];
   id: number;
-  original_title: string;
-  original_language: string;
+  details: string;
+  releaseDate: string;
+  genres: number[];
   title: string;
-  backdrop_path: string | null;
+  originalTitle: string;
+  originalLanguage: string;
+  backdropPath: string;
+  posterPath: string;
   popularity: number;
-  vote_count: number;
-  video: boolean;
-  vote_average: number;
+  averageRating: number;
+  numberOfRatings: number;
 };
