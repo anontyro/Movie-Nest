@@ -36,6 +36,6 @@ const getMovieRoute = (route: string, params: UrlParam[]): string | null => {
       output += r;
     });
   }
-  let uri = `${API_BASE}${MOVIE_BASE}${output}`;
+  const uri = `${API_BASE}${MOVIE_BASE}${output}`;
   return uri;
 };

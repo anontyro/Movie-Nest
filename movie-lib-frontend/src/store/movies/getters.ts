@@ -5,6 +5,7 @@ import { State } from './state';
 
 export type Getters = {
   getCurrentlyPlayingMovies(state: State): MovieItem[] | null;
+  getMovieLoadState(state: State): boolean;
   getMovieDetailOrPartial(
     state: State,
   ): (id: number) => Partial<MovieDetails> | null;
@@ -12,6 +13,7 @@ export type Getters = {
 
 export const getters: GetterTree<State, RootState> & Getters = {
   getCurrentlyPlayingMovies: (state) => state.currentlyPlaying.movies,
+  getMovieLoadState: (state) => state.isLoading,
   getMovieDetailOrPartial: (state) => (id: number) => {
     const isCurrentlyLoaded = state.selectedMovie.id === id;
     if (isCurrentlyLoaded) {

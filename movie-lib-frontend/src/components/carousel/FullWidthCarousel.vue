@@ -1,6 +1,7 @@
 <template>
     <Carousel :autoplay="4000" :wrap-around="true">
     <slide v-for="movie in movies" :key="movie.id">
+      <router-link class="slider-link" :to="{name: 'MovieDetails', params: {id: movie.id}}">
       <div class="slide-item-container">
         <div class="slide-item-img" :style="{ backgroundImage: `url(${createBgImg(movie)})`}">
           <div class="slide-title">
@@ -8,6 +9,7 @@
           </div> 
         </div>
       </div>
+      </router-link>
     </slide>
     <template #addons>
       <pagination />
@@ -46,6 +48,10 @@ export default class FullWidthCarousel extends Vue.with(Props) {
 
 </script>
 <style lang="scss" scoped>
+  .slider-link{
+    width: 100%;
+    height: 100%;
+  }
   .slide-item-container{
     width: 100%;
     height: 30rem;

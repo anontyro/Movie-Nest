@@ -7,6 +7,7 @@ import * as MutationTypes from './mutation-types';
 import * as ActionTypes from './action-types';
 import { MovieDetails, MovieItem } from '@/@types';
 import { httpGet } from '@/utils/apiCalls';
+import { buildRoute, MOVIE_ROUTES } from '@/utils/apiRoutes';
 
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
@@ -30,14 +31,17 @@ export interface Actions {
   ): Promise<boolean>;
 }
 
+const buildMovieRoute = buildRoute();
+
 export const actions: ActionTree<State, RootState> & Actions = {
-  async [ActionTypes.FETCH_CURRENTLY_PLAYING]({ commit }, page: number = 1) {
-    commit(MutationTypes.SET_MOVIE_LOADING, { isLoading: true });
+  async [ActionTypes.FETCH_CURRENTLY_PLAYING]({ commit }, page = 1) {
     try {
-      const movies = await httpGet<MovieItem[]>(
-        `/api/movie/now-playing?page=${page}`,
-      );
+      commit(MutationTypes.SET_MOVIE_LOADING, { isLoading: true });
+
+      const route = buildMovieRoute(MOVIE_ROUTES.NOW_PLAYING);
+      const movies = await httpGet<MovieItem[]>(`${route}?page=${page}`);
       console.log('now playing movies fetched', movies);
+
       commit(MutationTypes.SET_CURRENTLY_PLAYING, {
         page,
         movies,
@@ -45,15 +49,16 @@ export const actions: ActionTree<State, RootState> & Actions = {
       return true;
     } finally {
       commit(MutationTypes.SET_MOVIE_LOADING, { isLoading: false });
-      return false;
     }
   },
   async [ActionTypes.FETCH_POPULAR_MOVIES]({ commit, dispatch }, page: number) {
     try {
-      const movies = await httpGet<MovieItem[]>(
-        `/api/movie/popular?page=${page}`,
-      );
+      commit(MutationTypes.SET_MOVIE_LOADING, { isLoading: true });
+
+      const route = buildMovieRoute(MOVIE_ROUTES.POPULAR);
+      const movies = await httpGet<MovieItem[]>(`${route}?page=${page}`);
       console.log('popular movies fetched', movies);
+
       commit(MutationTypes.SET_POPULAR_MOVIES, {
         page,
         movies,
@@ -61,7 +66,6 @@ export const actions: ActionTree<State, RootState> & Actions = {
       return true;
     } finally {
       commit(MutationTypes.SET_MOVIE_LOADING, { isLoading: false });
-      return false;
     }
   },
   async [ActionTypes.FETCH_SELECTED_MOVIE_DETAILS](
@@ -69,13 +73,18 @@ export const actions: ActionTree<State, RootState> & Actions = {
     movieId: string,
   ) {
     try {
-      const movie = await httpGet<MovieDetails>(`/api/movie/${movieId}`);
+      commit(MutationTypes.SET_MOVIE_LOADING, { isLoading: true });
+
+      const route = buildMovieRoute(MOVIE_ROUTES.MOVIE_DETAIL, [
+        { name: 'id', value: movieId },
+      ]);
+      const movie = await httpGet<MovieDetails>(`${route}`);
       console.log('movie detail retuned', movie);
+
       commit(MutationTypes.SET_SELECTED_MOVIE, movie);
       return true;
     } finally {
       commit(MutationTypes.SET_MOVIE_LOADING, { isLoading: false });
-      return false;
     }
   },
 };
