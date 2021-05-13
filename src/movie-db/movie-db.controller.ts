@@ -13,7 +13,7 @@ export class MovieDbController {
 
   @Get('popular')
   getPopular(@Query() query): Promise<MovieDto[]> {
-    const { page, region } = query;
+    const { page = 1, region } = query;
     return this.movieDbService.getPopular(page, region);
   }
 

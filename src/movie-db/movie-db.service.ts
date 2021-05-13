@@ -34,8 +34,17 @@ export class MovieDbService {
     }
     const popular = await this.httpFetch.getHttp<MovieDbEntity>(uri, query);
     const output = mapMovieEntityDto(popular.results);
+    const orderedOutput = output.sort((a, b) => {
+      if (a.popularity > b.popularity) {
+        return 1;
+      }
+      if (a.popularity < b.popularity) {
+        return -1;
+      }
+      return 0;
+    });
 
-    return output;
+    return orderedOutput;
   }
 
   async getMovieDetail(id: number): Promise<MovieDetailDto> {

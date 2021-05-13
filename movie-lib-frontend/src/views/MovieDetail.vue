@@ -2,7 +2,7 @@
   <div>
     <span>
       Movie Id :{{$route.params.id}}
-      </span>
+    </span>
   </div>  
 </template>
   <script lang="ts">
