@@ -24,6 +24,7 @@ export default class Home extends Vue {
   
   mounted(){
     this.fetchNowPlayingMovies();
+    this.fetchPopularMovies();
   }
 
   fetchNowPlayingMovies = async() => {
@@ -34,8 +35,16 @@ export default class Home extends Vue {
       }
   };
 
+  fetchPopularMovies = async() => {
+    await this.store.dispatch(MovieActionTypes.FETCH_POPULAR_MOVIES, 1);
+  };
+
   get nowPlaying(): MovieItem[] {
     return this.store.getters.getCurrentlyPlayingMovies ?? [];
+  }
+
+  get popularMovies(): MovieItem[]{
+    return this.store.getters.getPopularMovies ?? [];
   }
 
   
